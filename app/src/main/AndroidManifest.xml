@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppBanThietBiDiDong"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.ResetPassActivity"></activity>
+        <activity android:name=".activity.ThanhToanActivity"></activity>
+        <activity android:name=".activity.ResetPassActivity" />
         <activity android:name=".activity.DangNhapActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,7 +27,7 @@
         <activity android:name=".activity.ChiTietActivity" />
         <activity android:name=".activity.LaptopActivity" />
         <activity android:name=".activity.DienThoaiActivity" />
-        <activity android:name=".activity.MainActivity"></activity>
+        <activity android:name=".activity.MainActivity" />
     </application>
 
 </manifest>

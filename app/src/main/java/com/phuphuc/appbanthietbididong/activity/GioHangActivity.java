@@ -5,6 +5,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -68,6 +69,14 @@ public class GioHangActivity extends AppCompatActivity {
             gioHangAdapter = new GioHangAdapter(getApplicationContext(), Utils.gioHangList);
             recyclerView.setAdapter(gioHangAdapter);
         }
+
+        btnMuaHang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ThanhToanActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void initView() {
