@@ -6,7 +6,7 @@ import com.phuphuc.appbanthietbididong.model.User;
 import java.util.List;
 
 public class Utils {
-    public static final String BASE_URL = "http://192.168.1.9/appbanthietbididong/";
+    public static final String BASE_URL = "http://192.168.1.7/appbanthietbididong/";
     public static List<GioHang> gioHangList;
     public static User current_user = new User();
 

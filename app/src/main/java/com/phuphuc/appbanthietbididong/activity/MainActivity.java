@@ -105,6 +105,10 @@ public class MainActivity extends AppCompatActivity {
                         laptop.putExtra("loai", 2);
                         startActivity(laptop);
                         break;
+                    case 5:
+                        Intent donhang = new Intent(getApplicationContext(), XemDonHangActivity.class);
+                        startActivity(donhang);
+                        break;
                 }
             }
         });

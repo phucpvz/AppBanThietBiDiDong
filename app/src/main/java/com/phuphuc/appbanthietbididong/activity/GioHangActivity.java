@@ -29,6 +29,7 @@ public class GioHangActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     Button btnMuaHang;
     GioHangAdapter gioHangAdapter;
+    long tongTien;
 
 
     @Override
@@ -42,12 +43,12 @@ public class GioHangActivity extends AppCompatActivity {
 
     private void tinhTongTien() {
         if (Utils.gioHangList == null) return;
-        int tong = 0;
+        tongTien = 0;
         for (int i = 0; i < Utils.gioHangList.size(); ++i) {
-            tong += Utils.gioHangList.get(i).getGiasp();
+            tongTien += Utils.gioHangList.get(i).getGiasp();
         }
         DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
-        txtTongTien.setText(decimalFormat.format(tong));
+        txtTongTien.setText(decimalFormat.format(tongTien));
     }
 
     private void initControl() {
@@ -74,6 +75,7 @@ public class GioHangActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), ThanhToanActivity.class);
+                intent.putExtra("tongtien", tongTien);
                 startActivity(intent);
             }
         });

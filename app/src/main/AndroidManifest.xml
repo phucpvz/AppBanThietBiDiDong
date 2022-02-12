@@ -13,9 +13,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppBanThietBiDiDong"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.ThanhToanActivity"></activity>
+        <activity
+            android:name=".activity.XemDonHangActivity"
+            android:exported="false" />
+        <activity android:name=".activity.ThanhToanActivity" />
         <activity android:name=".activity.ResetPassActivity" />
-        <activity android:name=".activity.DangNhapActivity">
+        <activity
+            android:name=".activity.DangNhapActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

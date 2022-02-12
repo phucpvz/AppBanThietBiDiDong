@@ -5,6 +5,7 @@ import androidx.appcompat.widget.AppCompatButton;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -28,6 +29,7 @@ public class DangNhapActivity extends AppCompatActivity {
     AppCompatButton btnDangNhap;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
     ApiBanHang apiBanHang;
+    boolean isLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,33 +63,37 @@ public class DangNhapActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Bạn chưa nhập email!", Toast.LENGTH_SHORT).show();
                 } else if (TextUtils.isEmpty(password)) {
                     Toast.makeText(getApplicationContext(), "Bạn chưa nhập password!", Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    compositeDisposable.add(apiBanHang.dangNhap(email, password)
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(
-                                    userModel -> {
-                                        if (userModel.isSuccess()) {
-                                            Paper.book().write("email", email);
-                                            Paper.book().write("password", password);
-                                            Toast.makeText(getApplicationContext(), "Đăng nhập thành công!", Toast.LENGTH_LONG).show();
-                                            Utils.current_user = userModel.getResult().get(0);
-                                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                            startActivity(intent);
-                                            finish();
-                                        }
-                                        else {
-                                            Toast.makeText(getApplicationContext(), "Email hoặc mật khẩu không chính xác!", Toast.LENGTH_LONG).show();
-                                        }
-                                    },
-                                    throwable -> {
-                                        Toast.makeText(getApplicationContext(), throwable.getMessage(), Toast.LENGTH_LONG).show();
-                                    }
-                            ));
+                } else {
+                    dangNhap(email, password);
                 }
             }
         });
+    }
+
+    private void dangNhap(String email, String password) {
+        compositeDisposable.add(apiBanHang.dangNhap(email, password)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        userModel -> {
+                            if (userModel.isSuccess()) {
+                                Paper.book().write("email", email);
+                                Paper.book().write("password", password);
+                                isLogin = true;
+                                Paper.book().write("isLogin", isLogin);
+                                Toast.makeText(getApplicationContext(), "Đăng nhập thành công!", Toast.LENGTH_LONG).show();
+                                Utils.current_user = userModel.getResult().get(0);
+                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Email hoặc mật khẩu không chính xác!", Toast.LENGTH_LONG).show();
+                            }
+                        },
+                        throwable -> {
+                            Toast.makeText(getApplicationContext(), throwable.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                ));
     }
 
     private void initView() {
@@ -104,6 +110,17 @@ public class DangNhapActivity extends AppCompatActivity {
         if (email != null && password != null) {
             txtEmail.setText(email);
             txtPassword.setText(password);
+            if (Paper.book().read("isLogin") != null) {
+                boolean flag = Paper.book().read("isLogin");
+                if (flag) {
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            dangNhap(email, password);
+                        }
+                    }, 1000);
+                }
+            }
         }
     }
 
@@ -116,6 +133,17 @@ public class DangNhapActivity extends AppCompatActivity {
         if (email != null && password != null) {
             txtEmail.setText(email);
             txtPassword.setText(password);
+            /*if (Paper.book().read("isLogin") != null) {
+                boolean flag = Paper.book().read("isLogin");
+                if (flag) {
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            dangNhap(email, password);
+                        }
+                    }, 1000);
+                }
+            }*/
         }
     }
 

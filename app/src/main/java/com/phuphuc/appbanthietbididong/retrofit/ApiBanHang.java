@@ -1,5 +1,6 @@
 package com.phuphuc.appbanthietbididong.retrofit;
 
+import com.phuphuc.appbanthietbididong.model.DonHangModel;
 import com.phuphuc.appbanthietbididong.model.LoaiSanPhamModel;
 import com.phuphuc.appbanthietbididong.model.SanPhamMoiModel;
 import com.phuphuc.appbanthietbididong.model.UserModel;
@@ -44,5 +45,23 @@ public interface ApiBanHang {
     @FormUrlEncoded
     Observable<UserModel> resetPass(
             @Field("email") String email
+    );
+
+    @POST("donhang.php")
+    @FormUrlEncoded
+    Observable<UserModel> thanhToan(
+            @Field("email") String email,
+            @Field("sdt") String sdt,
+            @Field("tongtien") String tongtien,
+            @Field("iduser") int id,
+            @Field("diachi") String diachi,
+            @Field("soluong") int soluong,
+            @Field("chitiet") String chitiet
+    );
+
+    @POST("xemdonhang.php")
+    @FormUrlEncoded
+    Observable<DonHangModel> xemDonHang(
+            @Field("iduser") int id
     );
 }
