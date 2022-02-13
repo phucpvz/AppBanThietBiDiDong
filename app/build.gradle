@@ -64,4 +64,10 @@ dependencies {
 
     // Gson
     implementation 'com.google.code.gson:gson:2.8.9'
+
+    // LottieFiles
+    implementation 'com.airbnb.android:lottie:4.2.2'
+
+    // Neumorphism
+    implementation 'com.github.fornewid:neumorphism:0.3.0'
 }

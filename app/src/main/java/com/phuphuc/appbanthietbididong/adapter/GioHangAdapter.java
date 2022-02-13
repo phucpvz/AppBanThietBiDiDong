@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -57,6 +59,19 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.MyViewHo
         Picasso.get().load(gioHang.getHinhsp()).into(holder.imgHinh);
         long thanhTien = gioHang.getGiasp();
         holder.txtThanhTien.setText(decimalFormat.format(thanhTien));
+        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    if (Utils.muaHangList.contains(gioHang)) return;
+                    Utils.muaHangList.add(gioHang);
+                }
+                else {
+                    Utils.muaHangList.remove(gioHang);
+                }
+                EventBus.getDefault().postSticky(new TinhTongEvent());
+            }
+        });
         holder.setImageClickListener(new IImageClickListener() {
             @Override
             public void onImageClick(View view, int position, int value) {
@@ -113,6 +128,7 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.MyViewHo
         ImageView imgHinh, imgTru, imgCong;
         TextView txtTen, txtGia, txtSoLuong, txtThanhTien;
         IImageClickListener imageClickListener;
+        CheckBox checkBox;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -125,6 +141,7 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.MyViewHo
             imgCong = itemView.findViewById(R.id.item_giohang_cong);
             imgCong.setOnClickListener(this);
             imgTru.setOnClickListener(this);
+            checkBox = itemView.findViewById(R.id.item_giohang_check);
         }
 
         public void setImageClickListener(IImageClickListener imageClickListener) {

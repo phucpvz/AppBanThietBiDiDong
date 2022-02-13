@@ -1,6 +1,5 @@
 package com.phuphuc.appbanthietbididong.activity;
 
-import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -14,7 +13,6 @@ import android.widget.Toast;
 
 import com.phuphuc.appbanthietbididong.R;
 import com.phuphuc.appbanthietbididong.adapter.DienThoaiAdapter;
-import com.phuphuc.appbanthietbididong.adapter.SanPhamMoiAdapter;
 import com.phuphuc.appbanthietbididong.model.SanPhamMoi;
 import com.phuphuc.appbanthietbididong.retrofit.ApiBanHang;
 import com.phuphuc.appbanthietbididong.retrofit.RetrofitClient;
@@ -26,7 +24,6 @@ import java.util.List;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
-import okhttp3.internal.Util;
 
 public class DienThoaiActivity extends AppCompatActivity {
 
@@ -150,7 +147,7 @@ public class DienThoaiActivity extends AppCompatActivity {
 
     private void AnhXa() {
         toolbar = findViewById(R.id.toolbardienthoai);
-        recyclerView = findViewById(R.id.recyclerviewDienThoai);
+        recyclerView = findViewById(R.id.recyclerviewdienthoai);
         linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);

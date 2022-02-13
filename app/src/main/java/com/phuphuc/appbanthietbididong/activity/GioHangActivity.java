@@ -31,7 +31,6 @@ public class GioHangActivity extends AppCompatActivity {
     GioHangAdapter gioHangAdapter;
     long tongTien;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,10 +41,10 @@ public class GioHangActivity extends AppCompatActivity {
     }
 
     private void tinhTongTien() {
-        if (Utils.gioHangList == null) return;
+        if (Utils.muaHangList == null) return;
         tongTien = 0;
-        for (int i = 0; i < Utils.gioHangList.size(); ++i) {
-            tongTien += Utils.gioHangList.get(i).getGiasp();
+        for (int i = 0; i < Utils.muaHangList.size(); ++i) {
+            tongTien += Utils.muaHangList.get(i).getGiasp();
         }
         DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
         txtTongTien.setText(decimalFormat.format(tongTien));
@@ -76,6 +75,7 @@ public class GioHangActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), ThanhToanActivity.class);
                 intent.putExtra("tongtien", tongTien);
+                Utils.gioHangList.clear();
                 startActivity(intent);
             }
         });

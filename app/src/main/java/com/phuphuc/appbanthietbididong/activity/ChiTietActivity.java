@@ -47,7 +47,7 @@ public class ChiTietActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        notificationBadge.setText(String.valueOf(Utils.demSoLuongSanPhamGioHang()));
+        notificationBadge.setText(String.valueOf(Utils.demSoLuongSanPhamGioHang(Utils.gioHangList)));
     }
 
     private void initControl() {
@@ -93,7 +93,7 @@ public class ChiTietActivity extends AppCompatActivity {
             gioHang.setGiasp(gia);
             Utils.gioHangList.add(gioHang);
         }
-        notificationBadge.setText(String.valueOf(demSoLuongSanPhamGioHang()));
+        notificationBadge.setText(String.valueOf(demSoLuongSanPhamGioHang(Utils.gioHangList)));
     }
 
     private void initData() {
@@ -126,7 +126,7 @@ public class ChiTietActivity extends AppCompatActivity {
             }
         });
         if (Utils.gioHangList != null) {
-            notificationBadge.setText(String.valueOf(Utils.demSoLuongSanPhamGioHang()));
+            notificationBadge.setText(String.valueOf(Utils.demSoLuongSanPhamGioHang(Utils.gioHangList)));
         }
     }
 

@@ -83,6 +83,8 @@ public class DangNhapActivity extends AppCompatActivity {
                                 Paper.book().write("isLogin", isLogin);
                                 Toast.makeText(getApplicationContext(), "Đăng nhập thành công!", Toast.LENGTH_LONG).show();
                                 Utils.current_user = userModel.getResult().get(0);
+                                // Lưu lại thông tin người dùng
+                                Paper.book().write("user", userModel.getResult().get(0));
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                 startActivity(intent);
                                 finish();
@@ -116,7 +118,7 @@ public class DangNhapActivity extends AppCompatActivity {
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            dangNhap(email, password);
+//                            dangNhap(email, password);
                         }
                     }, 1000);
                 }

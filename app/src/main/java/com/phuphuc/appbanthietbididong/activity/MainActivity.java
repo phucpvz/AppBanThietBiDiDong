@@ -32,6 +32,7 @@ import com.phuphuc.appbanthietbididong.adapter.SanPhamMoiAdapter;
 import com.phuphuc.appbanthietbididong.model.GioHang;
 import com.phuphuc.appbanthietbididong.model.LoaiSanPham;
 import com.phuphuc.appbanthietbididong.model.SanPhamMoi;
+import com.phuphuc.appbanthietbididong.model.User;
 import com.phuphuc.appbanthietbididong.retrofit.ApiBanHang;
 import com.phuphuc.appbanthietbididong.retrofit.RetrofitClient;
 import com.phuphuc.appbanthietbididong.utils.Utils;
@@ -39,6 +40,7 @@ import com.phuphuc.appbanthietbididong.utils.Utils;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.paperdb.Paper;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -61,11 +63,17 @@ public class MainActivity extends AppCompatActivity {
     NotificationBadge badge;
     FrameLayout frameLayout;
 
+    ImageView imgSearch;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         apiBanHang = RetrofitClient.getInstance(Utils.BASE_URL).create(ApiBanHang.class);
+        Paper.init(this);
+        if (Paper.book().read("user") != null) {
+            Utils.current_user = Paper.book().read("user");
+        }
 
         AnhXa();
         ActionBar();
@@ -83,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        badge.setText(String.valueOf(Utils.demSoLuongSanPhamGioHang()));
+        badge.setText(String.valueOf(Utils.demSoLuongSanPhamGioHang(Utils.gioHangList)));
     }
 
     private void setEventClick() {
@@ -108,6 +116,18 @@ public class MainActivity extends AppCompatActivity {
                     case 5:
                         Intent donhang = new Intent(getApplicationContext(), XemDonHangActivity.class);
                         startActivity(donhang);
+                        break;
+                    case 6:
+                        Intent quanly = new Intent(getApplicationContext(), QuanLyActivity.class);
+                        startActivity(quanly);
+                        finish();
+                        break;
+                    case 7:
+                        // Xóa key user
+                        Paper.book().delete("user");
+                        Intent dangnhap = new Intent(getApplicationContext(), DangNhapActivity.class);
+                        startActivity(dangnhap);
+                        finish();
                         break;
                 }
             }
@@ -140,6 +160,8 @@ public class MainActivity extends AppCompatActivity {
                         loaiSanPhamModel -> {
                             if (loaiSanPhamModel.isSuccess()) {
                                 loaiSanPhamList = loaiSanPhamModel.getResult();
+                                loaiSanPhamList.add(new LoaiSanPham("Quản lý", ""));
+                                loaiSanPhamList.add(new LoaiSanPham("Đăng xuất", ""));
                                 loaiSanPhamAdapter = new LoaiSanPhamAdapter(getApplicationContext(), loaiSanPhamList);
                                 listViewManHinhChinh.setAdapter(loaiSanPhamAdapter);
                             }
@@ -182,6 +204,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void AnhXa() {
+        imgSearch = findViewById(R.id.imgSearch);
         toolbar = findViewById(R.id.toolbarmanhinhchinh);
         viewFlipper = findViewById(R.id.viewfliiper);
         recyclerViewManHinhChinh = findViewById(R.id.recyclerview);
@@ -199,13 +222,20 @@ public class MainActivity extends AppCompatActivity {
             Utils.gioHangList = new ArrayList<>();
         }
         else {
-            badge.setText(String.valueOf(Utils.demSoLuongSanPhamGioHang()));
+            badge.setText(String.valueOf(Utils.demSoLuongSanPhamGioHang(Utils.gioHangList)));
         }
         frameLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent giohang = new Intent(getApplicationContext(), GioHangActivity.class);
                 startActivity(giohang);
+            }
+        });
+        imgSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
+                startActivity(intent);
             }
         });
     }

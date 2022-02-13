@@ -69,8 +69,8 @@ public class ThanhToanActivity extends AppCompatActivity {
                     String email = Utils.current_user.getEmail();
                     String sdt = Utils.current_user.getMobile();
                     int id = Utils.current_user.getId();
-                    int soluong = Utils.demSoLuongSanPhamGioHang();
-                    String chitiet = new Gson().toJson(Utils.gioHangList);
+                    int soluong = Utils.demSoLuongSanPhamGioHang(Utils.muaHangList);
+                    String chitiet = new Gson().toJson(Utils.muaHangList);
 
                     compositeDisposable.add(apiBanHang.thanhToan(email, sdt, String.valueOf(tongTien), id, address, soluong, chitiet)
                             .subscribeOn(Schedulers.io())
@@ -79,6 +79,7 @@ public class ThanhToanActivity extends AppCompatActivity {
                                     userModel -> {
                                         if (userModel.isSuccess()) {
                                             Toast.makeText(getApplicationContext(), "Đã đặt hàng thành công!", Toast.LENGTH_LONG).show();
+                                            Utils.muaHangList.clear();
                                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                             startActivity(intent);
                                             finish();

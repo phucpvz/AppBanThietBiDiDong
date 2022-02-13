@@ -4,26 +4,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.DienThoaiActivity">
-
+    tools:context=".activity.SearchActivity">
     <androidx.appcompat.widget.Toolbar
         app:layout_constraintTop_toTopOf="parent"
-        android:id="@+id/toolbardienthoai"
-        app:title="Điện thoại"
-        android:background="#FF793B"
+        android:id="@+id/toolbarSearch"
+        app:title=""
+        android:background="#5E76FB"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize">
     </androidx.appcompat.widget.Toolbar>
-
+    <EditText
+        android:hint="Nhập sản phẩm cần tìm"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:id="@+id/edtSearch"
+        app:layout_constraintTop_toBottomOf="@id/toolbarSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
     <androidx.recyclerview.widget.RecyclerView
         android:layout_marginTop="5dp"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
-        android:id="@+id/recyclerviewdienthoai"
-        app:layout_constraintTop_toBottomOf="@id/toolbardienthoai"
+        android:id="@+id/recyclerview_search"
+        app:layout_constraintTop_toBottomOf="@id/edtSearch"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="match_parent"
         android:layout_height="0dp">
     </androidx.recyclerview.widget.RecyclerView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
